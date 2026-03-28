@@ -1,0 +1,191 @@
+/* ═══════════════════════════════════════════════════════════
+   Argos Search — Launcher Mode (Glassmorphism)
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+    height: 100%; overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px; color: #e8e8f0;
+    background: transparent;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+}
+
+#launcher {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 56px;
+}
+
+/* ─── Launcher Bar ───────────────────────────────────────── */
+.launcher-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background: rgba(16, 16, 28, 0.88);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(0, 212, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 200ms ease;
+}
+
+.launcher-bar:focus-within {
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 212, 255, 0.15),
+        0 0 0 1px rgba(0, 212, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.launcher-icon {
+    font-size: 22px;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+    animation: iconPulse 3s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+#launcher-input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: #e8e8f0;
+    caret-color: #00d4ff;
+    letter-spacing: -0.2px;
+}
+
+#launcher-input::placeholder {
+    color: rgba(136, 136, 160, 0.6);
+    font-weight: 400;
+}
+
+.launcher-hint {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(136, 136, 160, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Results Dropdown ───────────────────────────────────── */
+.launcher-results {
+    margin-top: 6px;
+    max-height: 360px;
+    overflow-y: auto;
+    background: rgba(16, 16, 28, 0.92);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    padding: 6px;
+}
+
+.launcher-results::-webkit-scrollbar { width: 4px; }
+.launcher-results::-webkit-scrollbar-track { background: transparent; }
+.launcher-results::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+/* ─── Result Item ────────────────────────────────────────── */
+.launcher-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 120ms ease;
+}
+
+.launcher-item:hover,
+.launcher-item.selected {
+    background: rgba(0, 212, 255, 0.08);
+}
+
+.launcher-item.selected {
+    border: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+.launcher-item:not(.selected) {
+    border: 1px solid transparent;
+}
+
+.launcher-item-ext {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    background: rgba(0, 212, 255, 0.1);
+    color: #00d4ff;
+    border: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+.launcher-item-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.launcher-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e8e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.launcher-item-path {
+    font-size: 10px;
+    color: rgba(136, 136, 160, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.launcher-item-action {
+    font-size: 10px;
+    color: rgba(136, 136, 160, 0.4);
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 120ms ease;
+}
+
+.launcher-item:hover .launcher-item-action,
+.launcher-item.selected .launcher-item-action {
+    opacity: 1;
+}
+
+/* ─── Utility ────────────────────────────────────────────── */
+.hidden { display: none !important; }

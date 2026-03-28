@@ -463,8 +463,6 @@ function shortenPath(p) {
     }
     return p;
 }
-    return p;
-}
 function getExtClass(ext) {
     const m = { rs:'ext-rs', js:'ext-js', jsx:'ext-js', ts:'ext-ts', tsx:'ext-ts', py:'ext-py', md:'ext-md', json:'ext-json', toml:'ext-toml', yaml:'ext-yaml', yml:'ext-yaml', html:'ext-js', css:'ext-ts', txt:'ext-md', pdf:'ext-py' };
     return m[ext] || '';
