@@ -1,0 +1,33 @@
+# Argos Search — Default Configuration
+# This file can be placed in the root folder you want to index,
+# or next to the executable for global defaults.
+
+# Folders/patterns to exclude (case-insensitive)
+excludes = [
+    "node_modules", ".git", "target", ".argos",
+    "AppData", "Program Files", "Windows", "System32",
+    "$RECYCLE.BIN", "Temp", "Cache", ".vscode", ".idea",
+    "__pycache__", ".mypy_cache", "dist", "build",
+]
+
+# File extensions to index with full content extraction
+include_extensions = [
+    "txt", "md", "rst", "log", "readme",
+    "rs", "py", "js", "ts", "go", "cs", "cpp", "c", "h", "java", "rb", "php",
+    "toml", "yaml", "yml", "json", "xml", "ini", "env", "cfg", "conf",
+    "sh", "bash", "ps1", "bat", "cmd",
+    "html", "css", "svg",
+    "sql",
+]
+
+# Max file size for plain text extraction (default: 2 MB)
+max_file_size_bytes = 2_097_152
+
+# Max file size for structured files like PDF/DOCX (default: 10 MB, 0 = disabled)
+max_structured_file_size_bytes = 10_485_760
+
+# Hash threshold for small file dedup (default: 64 KB)
+hash_small_file_threshold = 65_536
+
+# Number of threads (0 = use all available CPU cores)
+threads = 0

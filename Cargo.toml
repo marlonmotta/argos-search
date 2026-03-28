@@ -1,0 +1,47 @@
+[workspace]
+members = ["crates/core", "crates/cli", "crates/tauri-app"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+version = "0.4.0"
+authors = ["Lord Hell <marlon@hell.dev>"]
+description = "Argos Search — Fast cross-platform file search (Windows + macOS)"
+
+[workspace.dependencies]
+# Search engine
+tantivy = "0.22"
+
+# Database
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+# Parallelism & filesystem
+rayon = "1"
+walkdir = "2"
+
+# Hashing
+xxhash-rust = { version = "0.8", features = ["xxh3"] }
+
+# Serialization & config
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+
+# Error handling & utils
+anyhow = "1"
+chrono = { version = "0.4", default-features = true }
+regex = "1"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Directory detection
+dirs = "6"
+
+# Unicode accent folding
+unicode-normalization = "0.1"
+
+# Tauri
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-build = { version = "2", features = [] }
