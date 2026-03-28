@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Argos Search</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div id="app">
+        <!-- Toolbar -->
+        <header class="toolbar">
+            <div class="toolbar-left">
+                <div class="logo">
+                    <span class="logo-icon">👁️</span>
+                    <span class="logo-text">Argos<span class="logo-accent">Search</span></span>
+                </div>
+            </div>
+            <div class="toolbar-right">
+                <div id="scope-selector" class="scope-selector">
+                    <button class="scope-btn active" data-scope="Personal" title="Projects, Desktop, Downloads">🏠</button>
+                    <button class="scope-btn" data-scope="Extended" title="+ Documents, other drives">💿</button>
+                    <button class="scope-btn" data-scope="Full" title="+ Programs">📦</button>
+                    <button class="scope-btn" data-scope="System" title="Everything">🖥️</button>
+                </div>
+                <button id="btn-folder" class="btn btn-ghost" title="Add custom folder">
+                    <span class="btn-icon">➕</span>
+                </button>
+                <button id="btn-settings" class="btn btn-ghost" title="Settings">
+                    <span class="btn-icon">⚙️</span>
+                </button>
+                <button id="btn-index" class="btn btn-primary" title="Build index" disabled>
+                    <span class="btn-icon">⚡</span>
+                    <span class="btn-label">Index</span>
+                </button>
+                <div id="file-count" class="badge hidden">0 files</div>
+            </div>
+        </header>
+
+        <!-- Root path bar -->
+        <div id="root-bar" class="root-bar hidden">
+            <span class="root-icon">📂</span>
+            <span id="root-path" class="root-path">Initializing...</span>
+        </div>
+
+        <!-- Search box -->
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔎</span>
+                <input id="search-input" type="text" placeholder="Search files... (accent-insensitive)" autocomplete="off" spellcheck="false" disabled />
+                <div id="search-stats" class="search-stats hidden"></div>
+            </div>
+        </div>
+
+        <!-- Scan overlay -->
+        <div id="scan-overlay" class="scan-overlay hidden">
+            <div class="scan-content">
+                <div class="scan-spinner"></div>
+                <h3>Escaneando arquivos...</h3>
+                <p id="scan-detail">Aguarde, isso pode demorar na primeira vez</p>
+            </div>
+        </div>
+
+        <!-- Results area -->
+        <div id="results-container" class="results-container">
+            <div id="empty-state" class="empty-state">
+                <div class="empty-eye">👁️</div>
+                <h2>Argos sees all</h2>
+                <p>Select scope, click ⚡ Index, then search</p>
+            </div>
+            <div id="results-list" class="results-list hidden"></div>
+            <div id="no-results" class="no-results hidden">
+                <span class="no-results-icon">🔍</span>
+                <p>No files found</p>
+            </div>
+        </div>
+
+        <!-- Context menu -->
+        <div id="context-menu" class="context-menu hidden">
+            <div class="ctx-item" data-action="open">📄 Abrir</div>
+            <div class="ctx-item" data-action="folder">📂 Abrir local</div>
+            <div class="ctx-sep"></div>
+            <div class="ctx-item" data-action="copy-path">📋 Copiar caminho</div>
+            <div class="ctx-item" data-action="copy-name">📝 Copiar nome</div>
+        </div>
+
+        <!-- Settings panel -->
+        <div id="settings-panel" class="settings-panel hidden">
+            <div class="settings-content">
+                <div class="settings-header">
+                    <h3>⚙️ Settings</h3>
+                    <button id="settings-close" class="btn btn-ghost">✕</button>
+                </div>
+
+                <!-- Monitored Folders -->
+                <div class="settings-section">
+                    <h4>📂 Monitored Folders</h4>
+                    <p class="settings-hint">These folders are scanned by Argos</p>
+                    <div id="scope-roots-list" class="folder-list"></div>
+                </div>
+
+                <!-- Custom Folders -->
+                <div class="settings-section">
+                    <h4>➕ Custom Folders</h4>
+                    <p class="settings-hint">Add extra folders to your search</p>
+                    <div id="custom-roots-list" class="folder-list"></div>
+                    <button id="btn-add-custom" class="btn btn-add-folder">
+                        <span class="btn-icon">📁</span>
+                        <span>Add folder...</span>
+                    </button>
+                </div>
+
+                <!-- Shortcut -->
+                <div class="settings-section">
+                    <h4>⌨️ Quick Launch Shortcut</h4>
+                    <p class="settings-hint">Press Record then your desired key combo</p>
+                    <div class="shortcut-recorder">
+                        <div id="shortcut-display" class="shortcut-display">Ctrl + Space</div>
+                        <button id="btn-record-shortcut" class="btn btn-ghost btn-record">🔴 Record</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status bar -->
+        <footer class="status-bar">
+            <span id="status-text" class="status-text">Ready</span>
+            <span id="status-version" class="status-version">v0.4.0</span>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
