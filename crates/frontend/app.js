@@ -41,6 +41,7 @@ const scanOverlay  = $('scan-overlay');
 const scanDetail   = $('scan-detail');
 const contextMenu  = $('context-menu');
 const settingsPanel = $('settings-panel');
+const launchModeSelect = $('launch-mode-select');
 const scopeBtns    = document.querySelectorAll('.scope-btn');
 
 let debounceTimer = null;
@@ -369,13 +370,25 @@ let isRecording = false;
 const shortcutDisplay = $('shortcut-display');
 const btnRecord = $('btn-record-shortcut');
 
-// Load saved shortcut on init
+// Load saved shortcut and mode on init
 (async () => {
     try {
         const sc = await invoke('get_shortcut');
         shortcutDisplay.textContent = sc;
+        
+        const mode = await invoke('get_launch_mode');
+        if (launchModeSelect) launchModeSelect.value = mode;
     } catch (e) { /* ignore */ }
 })();
+
+if (launchModeSelect) {
+    launchModeSelect.addEventListener('change', async (e) => {
+        try {
+            await invoke('set_launch_mode', { mode: e.target.value });
+            setStatus(`🚀 Launch mode saved: ${e.target.value}`);
+        } catch (err) { setStatus(`❌ ${err}`); }
+    });
+}
 
 btnRecord.addEventListener('click', () => {
     if (isRecording) {
@@ -461,8 +474,6 @@ function shortenPath(p) {
     if (homePrefix) {
         p = '~' + (winMatch ? '\\' : '/') + p.substring(homePrefix.length);
     }
-    return p;
-}
     return p;
 }
 function getExtClass(ext) {
