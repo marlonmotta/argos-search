@@ -1,0 +1,23 @@
+[package]
+name = "argos-tauri-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Argos Search — Desktop GUI (Tauri v2)"
+
+[[bin]]
+name = "argos-search"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { workspace = true }
+
+[dependencies]
+argos-core = { path = "../core" }
+tauri = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+tokio = { version = "1", features = ["rt"] }
+open = "5"
+tauri-plugin-global-shortcut = "2"
