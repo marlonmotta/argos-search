@@ -6,7 +6,7 @@ license.workspace = true
 description = "Argos Search CLI — index and search from the command line"
 
 [[bin]]
-name = "argos-search"
+name = "argos-cli"
 path = "src/main.rs"
 
 [dependencies]
