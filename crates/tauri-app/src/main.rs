@@ -110,7 +110,12 @@ fn build_engine_from_scope_and_custom(
     custom_roots: &[String],
 ) -> Result<ArgosEngine, String> {
     let config = ArgosConfig::load_global().unwrap_or_default();
-    let mut roots = scope.roots();
+    // Custom scope = ONLY custom_roots, no auto-detected roots
+    let mut roots = if *scope == SearchScope::Custom {
+        Vec::new()
+    } else {
+        scope.roots()
+    };
     for cr in custom_roots {
         let p = PathBuf::from(cr);
         if p.exists() && !roots.contains(&p) {
@@ -381,8 +386,11 @@ fn set_shortcut(shortcut: String) -> Result<bool, String> {
 fn pick_folder() -> Result<Option<String>, String> {
     #[cfg(target_os = "windows")]
     {
+        use std::os::windows::process::CommandExt;
         use std::process::Command;
+        const CREATE_NO_WINDOW: u32 = 0x08000000;
         let output = Command::new("powershell")
+            .creation_flags(CREATE_NO_WINDOW)
             .args([
                 "-NoProfile",
                 "-Command",
@@ -598,6 +606,21 @@ fn main() {
                     }
                 });
             }
+
+            // ── Launch Mode: decide which window to show on startup ──
+            let prefs = UserPrefs::load();
+            let mode = prefs.mode.unwrap_or_else(|| "launcher".to_string());
+            if mode == "launcher" {
+                // Hide main window, show launcher
+                if let Some(main_win) = app.get_webview_window("main") {
+                    let _ = main_win.hide();
+                }
+                if let Some(launcher_win) = app.get_webview_window("launcher") {
+                    let _ = launcher_win.show();
+                    let _ = launcher_win.set_focus();
+                }
+            }
+            // else: main window is already visible from config
 
             Ok(())
         })
