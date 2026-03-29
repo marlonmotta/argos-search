@@ -3,8 +3,7 @@
   "version": "0.5.1",
   "identifier": "dev.hell.argos-search",
   "build": {
-    "frontendDist": "../frontend",
-    "devUrl": "http://localhost:1420"
+    "frontendDist": "../frontend"
   },
   "app": {
     "withGlobalTauri": true,
