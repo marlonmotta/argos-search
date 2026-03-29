@@ -97,6 +97,8 @@ pub enum SearchScope {
     Full,
     /// Everything including Windows system dirs
     System,
+    /// Only user-selected custom folders
+    Custom,
 }
 
 impl SearchScope {
@@ -204,6 +206,9 @@ impl SearchScope {
                     }
                 }
             }
+            SearchScope::Custom => {
+                // Empty — custom_roots are added separately by the tauri app
+            }
         }
 
         roots
@@ -213,10 +218,11 @@ impl SearchScope {
     /// Higher scopes exclude fewer directories.
     pub fn excludes_override(&self) -> Vec<&'static str> {
         match self {
-            SearchScope::Personal => vec![],  // Use all default excludes
-            SearchScope::Extended => vec![],  // Same excludes, just more roots
+            SearchScope::Personal => vec![],
+            SearchScope::Extended => vec![],
             SearchScope::Full => vec!["Program Files", "Program Files (x86)", "ProgramData"],
             SearchScope::System => vec!["Program Files", "Program Files (x86)", "ProgramData", "Windows", "System32", "SysWOW64"],
+            SearchScope::Custom => vec![],
         }
     }
 
@@ -227,6 +233,7 @@ impl SearchScope {
             SearchScope::Extended => "💿 Extended",
             SearchScope::Full => "📦 Full",
             SearchScope::System => "🖥️ System",
+            SearchScope::Custom => "👤 Custom",
         }
     }
 
@@ -237,6 +244,7 @@ impl SearchScope {
             SearchScope::Extended => "Personal + Documents + other drives",
             SearchScope::Full => "Extended + installed programs",
             SearchScope::System => "Everything including Windows/macOS system",
+            SearchScope::Custom => "Only your hand-picked folders",
         }
     }
 
@@ -246,6 +254,7 @@ impl SearchScope {
             "extended" => SearchScope::Extended,
             "full" => SearchScope::Full,
             "system" => SearchScope::System,
+            "custom" => SearchScope::Custom,
             _ => SearchScope::Personal,
         }
     }
